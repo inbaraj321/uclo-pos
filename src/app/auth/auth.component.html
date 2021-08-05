@@ -1,0 +1,53 @@
+<div class="background">
+    <div class="fixed-background" style="background: #eee; background-size: cover;"></div>
+    <main class="main-screen-margin">
+        <div class="container">
+            <div class="row h-100">
+                <div class="col-12 col-md-10 mx-auto my-auto">
+                    <div class="card auth-card">
+                        <div class="form-side">
+                            <a href="javascript:void(0)">
+                                <span class="logo-single"  style="background: url('./assets/logos/logo2.png') no-repeat;    height: 80px; background-position: center center; background-size: 100%;"></span>
+                            </a>
+                            
+                            <form [formGroup]="angForm"  novalidate>
+                                <label class="form-group has-float-label mb-4">
+                                    <input class="form-control" formControlName="email"/>
+                                    <span>E-mail</span>
+
+                                    <div *ngIf="angForm.controls['email'].invalid && (angForm.controls['email'].dirty || angForm.controls['email'].touched)" class="danger-text">
+                                        <div *ngIf="angForm.controls['email'].errors">
+                                            Please Enter Email
+                                        </div>
+                                    </div>
+                                </label>
+
+                                <label class="form-group has-float-label mb-4">
+                                    <input class="form-control" type="password" formControlName="password" placeholder="" />
+                                    <span>Password</span>
+
+                                    <div *ngIf="angForm.controls['password'].invalid && (angForm.controls['password'].dirty || angForm.controls['password'].touched)" class="danger-text">
+                                        <div *ngIf="angForm.controls['password'].errors">
+                                            Please Enter Password
+                                        </div>
+                                    </div>
+                                </label>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <button (click)="login()" [disabled]="!angForm.valid" class="btn btn-primary btn-lg btn-shadow" type="submit">LOGIN</button>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="position-relative image-side " style="background: url('./assets/img/login/balloon.jpg') no-repeat center top; background-size: cover;">
+
+                            <!--<p class=" text-white h2">MAGIC IS IN THE DETAILS</p>
+
+                            <p class="white mb-0">
+                                Please use your credentials to login..
+                            </p>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>

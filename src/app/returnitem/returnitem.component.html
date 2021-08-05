@@ -1,0 +1,107 @@
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>All Returns</h1>
+                <!--<nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Library</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                </nav>-->
+                <button   pButton pRipple  label="Add New Return" class="p-button-success float-right" icon="pi pi-plus" (click)="openNewReturn()" iconPos="right"></button>
+                <div class="separator mb-5"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 ">
+                <app-table [tableData]="returnns" [tableSchema]="tableSchema" (onclickEvent)="onclickEvent($event)"></app-table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<p-blockUI [baseZIndex]="100000" [blocked]="addCustomerHideShow">
+    <p-dialog header="New Return" [style]="{width: '90vw'}" [maximizable]="true"  [draggable]="true" [resizable]="true" [(visible)]="addCustomerHideShow" [blockScroll]="true" [dismissableMask]="true">
+       
+        <div class="row">
+            <div class="col-6">
+                <label class="form-group has-float-label mb-4" >
+                    <p-dropdown [options]="Invids" placeholder="Select from list" [(ngModel)]="searchInvValue" optionLabel="name" optionValue="code" [filter]="true" filterBy="code" [showClear]="true"></p-dropdown>
+                    <span>Invoice No.</span>
+                </label>
+            </div>
+            <div class="col-6">
+                <label class="form-group has-float-label mb-4" >
+                    <p-dropdown [options]="Gino" placeholder="Select from list" [(ngModel)]="searchGinoValue"  optionLabel="name" optionValue="code" [filter]="true" filterBy="code" [showClear]="true"></p-dropdown>
+                    <span>GINO.</span>
+                </label>
+            </div>
+            <div class="col-12">
+                <button   pButton pRipple  label="Search" class="p-button mb-4 float-right" icon="pi pi-search" (click)="search()" iconPos="right"></button>
+            </div>
+            
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <p-table class="mt-4" [value]="selected" [(selection)]="selectedProducts3" dataKey="ID" class="pos-table" [scrollable]="true" scrollHeight="100px">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th  style="width: 35px; text-align: left;">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th style="width: 35px; text-align: left;">#</th>
+                            <th style="width: 40%; text-align: left;">Product</th>
+                            <th style="width: 40%; text-align: left;">Product Description</th>
+                            <th style="width: 15%; text-align: left;">Price</th>
+                            <th style="width: 15%; text-align: left;">Issued Qty</th>
+                            <th style="width: 15%; text-align: left;">Return Qty</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-product>
+                        <tr>
+                            <td style="width: 35px; text-align: left;">
+                                <p-tableCheckbox [value]="product"></p-tableCheckbox>
+                            </td>
+                            <td style="width: 35px; text-align: left;">{{product.LNNO}}</td>
+                            <td style="width: 40%; text-align: left;">{{product.ITEM}}</td>
+                            <td style="width: 40%; text-align: left;">{{product.ITEMNAME}}</td>
+                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.UNITPRICE)}}</td>
+                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.QTY)}}</td>
+                            <td style="width: 15%; text-align: left;" pEditableColumn>
+                                <p-cellEditor>
+                                    <ng-template pTemplate="input">
+                                        <input pInputText [matKeyboard]="''" type="number"  [(ngModel)]="product.returnQty">
+                                    </ng-template>
+                                    <ng-template pTemplate="output">
+                                        {{root.returnWithdenomination(product?.returnQty)}}
+                                    </ng-template>
+                                </p-cellEditor>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+
+            <div class="col-12">
+                <label class="form-group has-float-label mb-4" >
+                    <textarea  [rows]="5" [(ngModel)]="note" pInputTextarea ></textarea>
+                    <span>Note</span>
+                </label>
+            </div>
+        </div>
+        
+        <p-footer>
+            <button  pButton pRipple  label="Return" class="p-button-success" icon="pi pi-check" (click)="addReturn()" iconPos="right"></button>
+        </p-footer>
+    </p-dialog>
+</p-blockUI>
+
+<p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

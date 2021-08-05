@@ -1,0 +1,105 @@
+
+<div id="wrapper">
+    <div id="receiptData" style="width: auto; max-width: 580px; min-width: 250px; margin: 0 auto;">
+        <div id="inv-print-area">
+            <div class="logo-print">
+                <img [src]="CmpImg"/>
+            </div>
+            <div class="compData">
+                <p> {{cmpData['ADD1']}} {{cmpData['ADD2']}} {{cmpData['ADD3']}} {{cmpData['ADD4']}},</p>
+                <p>{{cmpData['STATE']}} {{cmpData['COUNTY']}}</p>
+                <p>{{cmpData['TELNO']}}</p>
+            </div>
+            <div class="CustomerDetail">
+                <p><b>Customer Name:</b>   {{invHdr?.CNAME==null?'Walk In Customer': invHdr?.CNAME}}</p>
+                <p><b>Invoice No/Ref:</b> {{invHdr?.INVOICE}}</p>
+                <p><b>GINO:</b> {{invHdr?.GINO}}</p>
+                <p><b>Sales Person:</b> {{invHdr?.CRBYNAME}}</p>
+                <p><b>Date:</b> {{invHdr?.INVOICE_DATE}}</p>
+            </div>
+            <div class="CustomerDetail">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th style="max-width: 35px;">QTY</th>
+                            <th>Rate</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    
+                    <tbody>
+                        <tr *ngFor="let item of invoiceDatadtl; let i = index">
+                            <td class="tl">#{{i+1}} {{item['ITEMNAME']}} </td>
+                            <td> {{root.returnWithdenomination(item['QTY'])}} </td>
+                            <td> {{root.returnWithdenomination(item['UNITPRICE'])}} </td>
+                            <td> {{root.returnWithdenomination(item['AMOUNT'])}} </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th>Total Qty:</th>
+                            <td>{{ root.returnWithdenomination(invHdr?.totalQTY)}}</td>
+                            <th>Total:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.SUB_TOTAL)}}</td>
+                        </tr>
+                        <tr *ngIf="(invHdr?.DISCOUNT) > 0">
+                            <th colspan="3">Discount:</th>
+                            <td> - {{ root.returnAsCurrency(invHdr?.DISCOUNT) }}</td>
+                        </tr>
+                        <tr *ngIf="(invHdr?.TAXAMOUNT) > 0">
+                            <th colspan="3">TAX:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.TAXAMOUNT) }}</td>
+                        </tr>
+                        <tr *ngIf="(invHdr?.ADJUSTMENT) > 0">
+                            <th colspan="3">Rounding:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.ADJUSTMENT) }}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="3">Grand Total:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.TOTAL_AMOUNT)}}</td>
+                        </tr>
+                        <tr *ngIf="(invHdr?.TOTAL_AMOUNT - invHdr?.TOTAL_PAID_BY_CUST) > 0">
+                            <th colspan="3">Paid Amount:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.TOTAL_PAID_BY_CUST) }}</td>
+                        </tr>
+                        <tr *ngIf="(invHdr?.TOTAL_AMOUNT - invHdr?.TOTAL_PAID_BY_CUST) > 0">
+                            <th colspan="3">Due Amount:</th>
+                            <td>{{ root.returnAsCurrency(invHdr?.TOTAL_AMOUNT - invHdr?.TOTAL_PAID_BY_CUST)}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+        
+                <table class="table table-center">
+                    <tr>
+                        <th>Paid Date</th>
+                        <th>Payment Type</th>
+                        <th>Paid Amount</th>
+                        <th>Bal. Change</th>
+                    </tr>
+                    <tr  *ngFor="let item of invoicepaymentDetail; let i = index">
+                        <td>{{ item?.receive_date }}</td> 
+                        <td>{{ item?.receive_mode }}</td> 
+                        <td>{{ root.returnAsCurrency(item?.TOTAL_PAYING) }}</td> 
+                        <td>{{ root.returnAsCurrency( (item?.TOTAL_PAYING - invHdr?.TOTAL_AMOUNT) > 0 ? (item?.TOTAL_PAYING - invHdr?.TOTAL_AMOUNT) : 0 ) }}</td>
+                    </tr>
+                </table>
+                <div class="footer">
+                    <p>Thank you for visiting us and making your purchase! We look forward to seeing you again. Have a great day!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="p-grid">
+            <div class="p-col-6">
+                <button style="width:100%" pButton pRipple onclick="window.print();" label="Print" class="p-button-success no-print" icon="pi pi-print"  iconPos="left"></button>
+            </div>
+
+            <div class="p-col-6">
+                <button style="width:100%" (click)="backToPOS()" pButton pRipple label="Back to previous Page" class="p-button-warning no-print" icon="pi pi-chevron-left"  iconPos="left"></button>
+            </div>
+        </div>
+    </div>
+</div>
+
+

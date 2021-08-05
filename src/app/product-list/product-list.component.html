@@ -1,0 +1,38 @@
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>Product Summary</h1>
+                <!--<nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Library</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                </nav>-->
+                <button pButton pRipple label="Add New Product" class="p-button-success float-right" icon="pi pi-plus" (click)="openAddProduct()" iconPos="right"></button>
+                <div class="separator mb-5"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 ">
+                <app-table [tableData]="virtualProducts" [tableSchema]="tableSchema" (onclickEvent)="onclickEvent($event)"></app-table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<p-blockUI [baseZIndex]="100000" [blocked]="addCustomerHideShow">
+    <p-dialog header="New Product" [style]="{width: '90vw'}" [maximizable]="true"  [draggable]="true" [resizable]="true" [(visible)]="addCustomerHideShow" [blockScroll]="true" [dismissableMask]="true">
+       <app-formcontrol [angForm]="angForm" [formData]="formData"></app-formcontrol>
+
+        <p-footer>
+            <button [disabled]="!angForm.valid"  pButton pRipple  label="Save" class="p-button-success" icon="pi pi-check" (click)="addProduct()" iconPos="right"></button>
+        </p-footer>
+    </p-dialog>
+</p-blockUI>
+<p-toast></p-toast>

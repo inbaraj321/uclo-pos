@@ -1,0 +1,41 @@
+<main>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <h1>All Sales Summary</h1>
+                <!--<nav class="breadcrumb-container d-none d-sm-block d-lg-inline-block" aria-label="breadcrumb">
+                    <ol class="breadcrumb pt-0">
+                        <li class="breadcrumb-item">
+                            <a href="#">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#">Library</a>
+                        </li>
+                        <li class="breadcrumb-item active" aria-current="page">Data</li>
+                    </ol>
+                </nav>-->
+                <div class="separator mb-5"></div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12 ">
+                <app-table [tableData]="virtualSales" [tableSchema]="tableSchema" (onclickEvent)="onclickEvent($event)"></app-table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<p-blockUI [baseZIndex]="100000" [blocked]="PaymentPopup">
+    <p-dialog header="Make Payment" [style]="{width: '50vw'}" [maximizable]="true"  [draggable]="true" [resizable]="true" [(visible)]="PaymentPopup" [blockScroll]="true" [dismissableMask]="true">
+       <app-formcontrol [angForm]="angForm" [formData]="formData"></app-formcontrol>
+
+        <p-footer>
+            <button [disabled]="!angForm.valid"  pButton pRipple  label="Save" class="p-button-success" icon="pi pi-check" (click)="MakePaymentsubmit()" iconPos="right"></button>
+        </p-footer>
+    </p-dialog>
+</p-blockUI>
+
+<p-blockUI  [baseZIndex]="100003" [blocked]="blocked">
+    <p-progressSpinner></p-progressSpinner>
+</p-blockUI>
+<p-toast></p-toast>

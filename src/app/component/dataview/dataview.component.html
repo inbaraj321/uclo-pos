@@ -1,0 +1,65 @@
+<p-dataView #dv [value]="AllProduct" [layout]="typegrid" [paginator]="true" [rows]="50"
+[lazy]="true" filterBy="ITEM,ITEMDESC,ITEMTYPE,PRD_BRAND_ID,PRD_CLS_ID">
+    <ng-template pTemplate="header">
+        <div class="p-inputgroup pi">
+            <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+            <input pInputText [matKeyboard]="''" placeholder="Search by Name / Class / Type / Brand / ID" [(ngModel)]="property" (input)="search(dv)" class="p-inputtext-sm " >
+            <span (click)="openFilter = !openFilter" pRipple class="p-inputgroup-addon right"><i [ngClass]="{'pi-filter pi': openFilter == false, 'pi pi-filter-slash' : openFilter == true }" ></i></span>       
+        </div>
+        <div class="p-grid mt-2" *ngIf="openFilter == true">
+            <div class="p-col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Class</span>    
+                    <p-dropdown  [options]="prdClass" placeholder="Select a Class" [(ngModel)]="class" (onChange)="search(dv)" optionLabel="PRD_CLS_DESC" optionValue="PRD_CLS_ID" [filter]="true" filterBy="PRD_CLS_DESC" [showClear]="true"></p-dropdown>
+                </div>
+            </div>
+            <div class="p-col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Type</span>  
+                    <p-dropdown  [options]="prdType" placeholder="Select a Type" [(ngModel)]="type" (onChange)="search(dv)" optionLabel="PRD_TYPE_DESC" optionValue="PRD_TYPE_ID" [filter]="true" filterBy="PRD_TYPE_DESC" [showClear]="true"></p-dropdown>
+                </div>
+            </div>
+            <div class="p-col-4">
+                <div class="p-inputgroup">
+                    <span class="p-inputgroup-addon">Brand</span>
+                    <p-dropdown  [options]="prdBrand" placeholder="Select a Brand" [(ngModel)]="brand" (onChange)="search(dv)" optionLabel="PRD_BRAND_DESC" optionValue="PRD_BRAND_ID" [filter]="true" filterBy="PRD_BRAND_DESC" [showClear]="true"></p-dropdown>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+    <ng-template let-virtualProducts pTemplate="gridItem">
+        <div class="p-col-4 p-md-3">
+            <div class="card" (click)="selectProduct(virtualProducts)" pTooltip="Reorder Level: {{root.returnWithdenomination(virtualProducts.reorderQty)}} {{virtualProducts.STKUOM}} &#013;
+            Max Stock Qty: {{root.returnWithdenomination(virtualProducts.MAXSTKQTY)}} {{virtualProducts.STKUOM}} &#013;
+            Stock On Hand: {{virtualProducts.stockQty == null?root.returnWithdenomination(0): root.returnWithdenomination(virtualProducts.stockQty)}} {{virtualProducts.STKUOM}} &#013;
+            Estimated Qty: {{root.returnWithdenomination(virtualProducts.estimatedQty)}} {{virtualProducts.STKUOM}} &#013;
+            Available Qty: {{root.returnWithdenomination(virtualProducts.availableQty)}} {{virtualProducts.STKUOM}} &#013;
+            Unit Price: {{root.returnAsCurrency(virtualProducts.UnitPrice)}} &#013;
+            Minimum Selling: {{root.returnAsCurrency(virtualProducts.MINSPRICE)}}">
+
+                <div class="position-relative">
+                    <a href="javascript:void(0)"><img class="card-img-top" fallback="./assets/img/profiles/l-1.jpg" [src]="root.getimageByUrl(virtualProducts.CATLOGPATH)" alt="{{virtualProducts.ITEMDESC.trim()}}"></a>
+                    <span *ngIf="virtualProducts.DISCOUNT !== null" class="badge badge-pill badge-theme-1 position-absolute badge-top-left">{{virtualProducts.DISCOUNT}}%</span>
+                    <!--<span *ngIf="virtualProducts.availableQty == null || root.returnWithdenomination(virtualProducts.availableQty) == root.returnWithdenomination(0)" class="badge badge-pill badge-danger position-absolute badge-top-left-2">OUT OF STOCK</span>-->
+                    <span *ngIf="virtualProducts.NONSTKFLAG == 'Y' " class="badge badge-pill badge-danger position-absolute badge-top-left-2">Non Inventory</span>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-12">
+                            <a href="javascript:void(0)">
+                                <p class="list-item-heading mb-2 pt-1">{{virtualProducts.ITEMDESC.trim()}}</p>
+                                <p class="small mb-4 pt-1">{{virtualProducts.ITEM.trim()}}</p>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </ng-template>
+</p-dataView> 
+
+<p-blockUI [target]="dv" [blocked]="blocked">
+    <p-progressSpinner></p-progressSpinner>
+</p-blockUI>
+
+<p-toast></p-toast>

@@ -1,0 +1,52 @@
+<p-table id="table" #dt1 [columns]="mainSchema" [value]="tableData" dataKey="id" [rows]="50" [showCurrentPageReport]="true" [rowsPerPageOptions]="[10,25,50,100]" [loading]="loading" styleClass="p-datatable-gridlines"
+[paginator]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+[globalFilterFields]="filters" >
+        <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+                <button pButton label="Clear" class="p-button-outlined" icon="pi pi-filter-slash" (click)="clear(dt1)"></button>
+                <span class="p-input-icon-left p-ml-auto">
+                    <i class="pi pi-search"></i>
+                    <input pInputText type="text" (input)="dt1.filterGlobal(returnvalue($event), 'contains')" placeholder="Search keyword" />
+                </span>
+            </div>
+        </ng-template>
+        <ng-template pTemplate="header" let-columns>
+            <tr>
+                <th style="width:50px" pResizableColumn>
+                    #
+                </th>
+                <th pResizableColumn *ngFor="let col of columns"  pSortableColumn="{{col.field}}" >
+                    <div class="p-d-flex p-jc-between p-ai-center">
+                        {{col.header}}
+                        <p-sortIcon field="code"></p-sortIcon>
+                        <p-columnFilter type="{{col.type}}"  field="{{col.field}}" display="menu" ></p-columnFilter>
+                    </div>
+                </th>
+                <th class="text-center" *ngIf="buttonSchema.length > 0">Action</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-i="rowIndex"  let-rowData let-columns="columns">
+            <tr>
+                <td class="text-center">
+                    {{i+1}}
+                </td>
+                <td *ngFor="let col of columns">
+                    <span *ngIf="col.type == 'text' && !col.status">{{ rowData[col.field]  }}</span>
+                    <span *ngIf="col.type == 'text' && col.status && col.status == 'S'" [class]="'customer-badge status-' + rowData[col.field]">{{rowData[col.field]}}</span>
+                    <span *ngIf="col.type == 'text' && col.status && col.status == 'CUR'">{{ root.returnAsCurrency(rowData[col.field]) }}</span>
+                    <span *ngIf="col.type == 'text' && col.status && col.status == 'D'">{{ root.returnDate(rowData[col.field]) | date: 'MM/dd/yyyy' }}</span>
+                    <span *ngIf="col.type == 'image'">
+                        <img style="width:100%" fallback="./assets/img/profiles/l-1.jpg" [src]="root.getimageByUrl(rowData[col.field])"/>
+                    </span>
+                </td>
+                <td style="text-align:center" *ngIf="buttonSchema.length > 0">
+                    <button *ngFor="let btn of buttonSchema" (click)="onClickEvent(rowData, btn?.action)" pButton pRipple type="button" pTooltip="{{btn?.tooltip}}" icon="pi {{btn?.icon}}" class="p-button-rounded p-button-text"></button>
+                </td>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage">
+            <tr>
+                <td colspan="8">No Data found.</td>
+            </tr>
+        </ng-template>
+    </p-table>

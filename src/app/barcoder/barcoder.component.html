@@ -1,0 +1,78 @@
+<div class="container no-print">
+    <div class="row">
+       <!--<div class="col-sm-3 mb-2">
+            <label >Barcode Type</label>
+            <p-dropdown [options]="typelist" (ngModelChange)="updateAngForm()" placeholder="Select from list"  [(ngModel)]="type"  optionLabel="name" optionValue="code" [filter]="true" filterBy="code" ></p-dropdown>
+        </div>-->
+        <div class="col-sm-3 mb-2">
+            <label >Width</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="width"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label class="">Height</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="height"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label >Font Size</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="size"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label >Margin Top</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="Mtop"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label >Margin Bottom</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="Mbottom"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label >Margin Left</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="Mleft"/>
+        </div>
+        <div class="col-sm-3  mb-2">
+            <label >Margin Right</label>
+            <input pInputText type="number" min="0"  class="form-control" [(ngModel)]="Mright"/>
+        </div>
+        <div class="col-sm-3 mb-2">
+            <label >Text align</label>
+            <p-dropdown [options]="textalign" placeholder="Select from list"  [(ngModel)]="textAlign"  optionLabel="name" optionValue="code" [filter]="true" filterBy="code" ></p-dropdown>
+        </div>
+        <div class="col-sm-3 mb-2">
+            <label >Text Position</label>
+            <p-dropdown [options]="textposition" placeholder="Select from list"  [(ngModel)]="position"  optionLabel="name" optionValue="code" [filter]="true" filterBy="code" ></p-dropdown>
+        </div>
+        <div class="col-sm-3 mb-2">
+            <label >Display Text</label>
+            <p-dropdown [options]="textdisplay" placeholder="Select from list"  [(ngModel)]="display"  optionLabel="name" optionValue="code" [filter]="true" filterBy="code" ></p-dropdown>
+        </div>
+        <div class="col-sm-3 mb-2">
+            <label >Print Count</label>
+            <input pInputText type="number" min="0"  class="form-control"  (input)="updateAngForm()" [(ngModel)]="count"/>
+        </div>
+
+        <div class="col-sm-6  mb-2">
+            <button style="width:100%" (click)="backToPOS()" pButton pRipple label="Back to previous Page" class="p-button-warning no-print" icon="pi pi-chevron-left"  iconPos="left"></button>
+        </div>
+        <div class="col-sm-6  mb-2">
+            <button style="width:100%" pButton pRipple onclick="window.print();" label="Print" class="p-button-success no-print" icon="pi pi-print"  iconPos="left"></button>
+        </div>
+    </div>
+</div>
+
+    <ngx-barcode6  
+
+    *ngFor="let fData of countarray"
+       
+    [bc-text-align]="textAlign" 
+    [bc-width]="width" 
+    [bc-height]="height" 
+    [bc-text-position]="position" 
+    [bc-font-size]="size" 
+    [bc-format]="type" 
+    [bc-value]="ProID"  
+    [bc-display-value]="display"
+    [bc-margin-top]="Mtop"
+    [bc-margin-bottom]="Mbottom"
+    [bc-margin-left]="Mleft"
+    [bc-margin-right]="Mright"
+    > </ngx-barcode6>
+

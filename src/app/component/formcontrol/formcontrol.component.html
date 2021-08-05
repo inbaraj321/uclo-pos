@@ -1,0 +1,123 @@
+
+    <form [formGroup]="angForm" class="p-grid" novalidate>
+        <div class="p-col-{{fData.col}}" *ngFor="let fData of formData">
+
+            <!--TEXT-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'text'">
+                <input [matKeyboard]="''" pInputText class="form-control" formControlName="{{fData?.name}}"/>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="(angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--TEXT-->
+
+            <!--heading-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'heading'">
+                <h6>{{fData?.lable}}</h6>
+            </label>
+            <!--TEXT-->
+
+            <!--Number-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'number'">
+                <input [matKeyboard]="''" pInputText type="number" min="0" class="form-control" formControlName="{{fData?.name}}"/>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="(angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--Number-->
+
+            <!--Date-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'date'">
+                <p-calendar  formControlName="{{fData?.name}}"></p-calendar>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="(angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--Date-->
+
+            <!--MOBILE-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'mobile'">
+                <p-inputMask pInputMask formControlName="{{fData?.name}}" mask="{{fData?.pattern}}"></p-inputMask>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="angForm.controls[fData?.name].invalid && (angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData?.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--MOBILE-->
+
+
+            <!--DROPDOWN-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'dropdown'">
+                <p-dropdown [options]="fData?.options" placeholder="Select from list"  formControlName="{{fData?.name}}"  optionLabel="{{fData?.optionLabel}}" optionValue="{{fData?.optionValue}}" [filter]="true" filterBy="{{fData?.optionLabel}}" [showClear]="true"></p-dropdown>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="angForm.controls[fData?.name].invalid && (angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData?.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--DROPDOWN-->
+
+            <!--DROPDOWN-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'uom'">
+                <p-dropdown [options]="fData?.options" placeholder="Select from list"  formControlName="{{fData?.name}}"  optionLabel="{{fData?.optionLabel}}" optionValue="{{fData?.optionValue}}" [filter]="true" filterBy="{{fData?.optionLabel}}" [showClear]="true"></p-dropdown>
+                <span>{{fData?.lable}}</span>
+                <br/>
+                
+                <p-toggleButton style="position:relative; top:5px;" onIcon="pi pi-check" offIcon="pi pi-times"  onLabel="Apply to all UOM" offLabel="Apply to all UOM" [(ngModel)]="selectedValues" (onChange)="applyuom($event)"></p-toggleButton>
+
+                <div *ngIf="angForm.controls[fData?.name].invalid && (angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData?.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--DROPDOWN-->
+
+
+            <!--TEXTAREA-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'textarea'">
+                
+                <textarea [matKeyboard]="''" [rows]="5" maxlength="1000" formControlName="{{fData?.name}}" pInputTextarea ></textarea>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="angForm.controls[fData?.name].invalid && (angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData?.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--TEXTAREA-->
+
+            <!--File Upload-->
+            <label class="form-group has-float-label mb-4" *ngIf="fData?.type == 'image'">
+                            
+                <!--<textarea [matKeyboard]="''" [rows]="5" formControlName="{{fData?.name}}" pInputTextarea ></textarea>-->
+                <p-fileUpload name="myfile[]" formControlName="{{fData?.name}}"  accept="image/*" [auto]="true"></p-fileUpload>
+                <span>{{fData?.lable}}</span>
+
+                <div *ngIf="angForm.controls[fData?.name].invalid && (angForm.controls[fData?.name].dirty || angForm.controls[fData?.name].touched)" class="danger-text">
+                    <div *ngIf="angForm.controls[fData?.name].errors">
+                        Please Enter {{fData?.lable}}
+                    </div>
+                </div>
+            </label>
+            <!--TEXTAREA-->
+        </div>
+    </form>
