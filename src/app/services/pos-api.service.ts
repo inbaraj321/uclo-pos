@@ -22,13 +22,14 @@ export class PosApiService {
   }
 
   get_allSales(){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_allSales/' + this.root.getUserData()['UI_PKEY'])
+    //debugger;
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-all-sales?uipKey=' + this.root.getUserData()['uiPKey'])
       .toPromise()
       .then(data => { return data; });
   }
 
   get_allSalesDraft(){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_allSalesDraft/' + this.root.getUserData()['UI_PKEY'])
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-sales-draft?uipKey=' + this.root.getUserData()['uiPKey'])
       .toPromise()
       .then(data => { return data; });
   }
@@ -64,7 +65,8 @@ export class PosApiService {
   }
 
   get_searchbyInvoiceIdGino(data: any){
-    return this.http.post<any>(this.root.BASE_URL + 'Pos/get_searchbyInvoiceIdGino', data)
+    debugger;
+    return this.http.post<any>(this.root.BASE_URL + 'pos/get-search-by-invoice-id-gino?invoiceNo=', 'IN03210000400')
       .toPromise()
       .then(data => { return data; });
   }
@@ -77,13 +79,14 @@ export class PosApiService {
   }
 
   get_SalesReturnList($data = ''){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_SalesReturnList/')
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-sales-return-list')
       .toPromise()
       .then(data => { return data; });
   }
 
   get_InvoiceIdGino($data = ''){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_InvoiceIdGino/')
+    debugger;
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-invoice-id-gino')
       .toPromise()
       .then(data => { return data; });
   }

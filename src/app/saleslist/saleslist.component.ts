@@ -36,6 +36,7 @@ export class SaleslistComponent implements OnInit {
     }
 
   ngOnInit(): void {
+    //debugger;
     this.getAllSales();
     this.primengConfig.ripple = true;
     this.intTable();
@@ -52,20 +53,24 @@ export class SaleslistComponent implements OnInit {
   }
 
   getAllSales(){
+    //debugger;
     this.posapi.get_allSales().then(sales=>{
       this.virtualSales = sales['allSales'];
+      console.log(this.virtualSales);
     })
   }
 
   intTable(){
     this.tableSchema['mainschema'] = [
-      {field: 'INVOICE_DATE', header: 'Date', type: 'text', width: 'auto',status: 'D' },
-      {field: 'INVOICE', header: 'Invoice No.', type: 'text', width: 'auto', },
-      {field: 'GINO', header: 'GINO', type: 'text', width: 'auto', },
-      {field: 'CUSTNO', header: 'Customer Name', type: 'text', width: 'auto', },
-      {field: 'BILL_STATUS', header: 'Status', type: 'text', width: 'auto', status: 'S' },
-      {field: 'TOTAL_AMOUNT', header: 'Grand Total', type: 'text', width: 'auto', status: 'CUR'},
-    ];
+      
+      {field: 'invoiceDate', header: 'Date', type: 'text', width: 'auto',status: 'D' },
+      {field: 'invoice', header: 'Invoice No.', type: 'text', width: 'auto', },
+      {field: 'giNo', header: 'GINO', type: 'text', width: 'auto', },
+      {field: 'custNo', header: 'Customer Name', type: 'text', width: 'auto', },
+      {field: 'billStatus', header: 'Status', type: 'text', width: 'auto', status: 'S' },
+      {field: 'totalAmount', header: 'Grand Total', type: 'text' , width: 'auto' },
+      //status: 'CUR' - need to set currency type in totalamount
+    ]; 
 
     this.tableSchema['buttonSchema'] = [
       {icon: 'pi-eye', tooltip: 'View Sales', action: 'view'},

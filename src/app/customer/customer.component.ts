@@ -15,7 +15,7 @@ import { Router } from  '@angular/router';
 export class CustomerComponent implements OnInit {
 
   customers: any[] = [];
-  public customer_Type: any[] = [];
+  public customer_type: any[] = [];
   public tableSchema :any =[];
   public PaymentPopup :boolean = false;
   public angForm: FormGroup;
@@ -56,19 +56,21 @@ export class CustomerComponent implements OnInit {
   }
 
   getAllCustomer(){
+    debugger;
     this.customerapi.get_customerAll().then(customer=>{
-      this.customers = customer['result'].customer_all;
-      this.customer_Type = customer['result'].customer_Type;
+      console.log(customer);
+      this.customers = customer['customerResult'].customer_all;
+      this.customer_type = customer['customerResult'].customer_type;
       this.runForm();
     })
   }
 
   intTable(){
     this.tableSchema['mainschema'] = [
-      {field: 'CNAME', header: 'Customer Name', type: 'text', width: 'auto'},
-      {field: 'CUSTOMER_TYPE_ID', header: 'Customer Type', type: 'text', width: 'auto'},
-      {field: 'TELNO', header: 'Customer Phone', type: 'text', width: 'auto'},
-      {field: 'EMAIL', header: 'Customer Email', type: 'text', width: 'auto'},
+      {field: 'cname', header: 'Customer Name', type: 'text', width: 'auto'},
+      {field: 'customerTypeId', header: 'Customer Type', type: 'text', width: 'auto'},
+      {field: 'telNo', header: 'Customer Phone', type: 'text', width: 'auto'},
+      {field: 'email', header: 'Customer Email', type: 'text', width: 'auto'},
     ];
 
     this.tableSchema['buttonSchema'] = [
@@ -81,7 +83,7 @@ export class CustomerComponent implements OnInit {
     this.formData = [
       { 'col': 6, 'name': 'customerID', 'type': 'text', 'lable': 'Customer ID *', },
       { 'col': 6, 'name': 'name', 'type': 'text', 'lable': 'Customer Name *', },
-      { 'col': 6, 'name': 'customer_type_id', 'type': 'dropdown', 'lable': 'Customer Type *', 'options':this.customer_Type, 'optionLabel':'CUSTOMER_TYPE_DESC', 'optionValue':'CUSTOMER_TYPE_ID' },
+      { 'col': 6, 'name': 'customer_type_id', 'type': 'dropdown', 'lable': 'Customer Type *', 'options':this.customer_type, 'optionLabel':'customerTypeDesc', 'optionValue':'customerTypeId' },
       { 'col': 6, 'name': 'telno', 'type': 'mobile', 'pattern': '99 9999 999 999', 'lable': 'Customer Phone', },
       { 'col': 6, 'name': 'email', 'type': 'text', 'lable': 'Customer Email', },
       { 'col': 12, 'name': 'remarks', 'type': 'textarea', 'lable': 'Remarks', }

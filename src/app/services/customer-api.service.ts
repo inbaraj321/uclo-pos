@@ -10,9 +10,12 @@ export class CustomerApiService {
   constructor(private root:RootService, private http: HttpClient) { }
 
   get_customerAll(){
-    return this.http.get<any>(this.root.BASE_URL + 'Customer/get_customerAll')
+    debugger;
+    return this.http.get<any>(this.root.BASE_URL + 'customer/get-customer-all')
+    
       .toPromise()
       .then(data => { return data; });
+      
   }
 
   getCustomerInsertID(){

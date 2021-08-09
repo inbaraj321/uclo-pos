@@ -59,6 +59,7 @@ export class ReturnitemComponent implements OnInit {
   }
 
   get_InvoiceIdGino(){
+    debugger;
     this.PosApiService.get_InvoiceIdGino().then(data=>{
       this.Invids = data.invoice;
       this.Gino = data.gino;
@@ -70,6 +71,7 @@ export class ReturnitemComponent implements OnInit {
   }
 
   search(){
+    debugger;
     if(this.searchInvValue !== '' || this.searchGinoValue !== ''){
 
       var data = {
@@ -87,13 +89,13 @@ export class ReturnitemComponent implements OnInit {
 
   intTable(){
     this.tableSchema['mainschema'] = [
-      {field: 'SORETURN', header: 'SO RETURN NO', type: 'text', width: 'auto'},
-      {field: 'GINO', header: 'GINO', type: 'text', width: 'auto'},
-      {field: 'INVOICE', header: 'INVOICE', type: 'text', width: 'auto'},
-      {field: 'CNAME', header: 'CUSTOMER NAME', type: 'text', width: 'auto'},
-      {field: 'RETURN_DATE', header: 'RETURN DATE', type: 'text', width: 'auto'},
-      {field: 'RETURN_QTY', header: 'RETURN QTY', type: 'text', width: 'auto'},
-      {field: 'STATUS', header: 'STATUS', type: 'text', width: 'auto'},
+      {field: 'soReturn', header: 'SO RETURN NO', type: 'text', width: 'auto'},
+      {field: 'giNO', header: 'GINO', type: 'text', width: 'auto'},
+      {field: 'invoice', header: 'INVOICE', type: 'text', width: 'auto'},
+      {field: 'custNo', header: 'CUSTOMER NAME', type: 'text', width: 'auto'},
+      {field: 'returnDate', header: 'RETURN DATE', type: 'text', width: 'auto'},
+      {field: 'returnQty', header: 'RETURN QTY', type: 'text', width: 'auto'},
+      {field: 'status', header: 'STATUS', type: 'text', width: 'auto'},
     ];
 
     this.tableSchema['buttonSchema'] = [
@@ -121,8 +123,9 @@ export class ReturnitemComponent implements OnInit {
       }
 
       this.PosApiService.addReturn(data).then((data:any)=>{
+        debugger;
         if(data['status']){
-          this.addCustomerHideShow = false;
+          this.addCustomerHideShow = true;
           this.angForm.reset();
           this.get_InvoiceIdGino();
           this.messageService.add({severity:'success', summary:'Return Added Successfully', detail:''});
@@ -139,6 +142,7 @@ export class ReturnitemComponent implements OnInit {
   }
 
   openNewReturn(){
+    debugger;
     this.addCustomerHideShow = true;
   }
 }
