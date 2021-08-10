@@ -19,19 +19,19 @@ export class CustomerApiService {
   }
 
   getCustomerInsertID(){
-    return this.http.get<any>(this.root.BASE_URL + 'Customer/get_customerInsertID')
+    return this.http.get<any>(this.root.BASE_URL + 'customer/get-customer-insert-id')
       .toPromise()
       .then(data => { return data; });
   }
 
   create_Customer(data: any){
-    return this.http.post<any>(this.root.BASE_URL + 'Customer/create_customer', data)
+    return this.http.post<any>(this.root.BASE_URL + 'customer/create-customer', data)
       .toPromise()
       .then(data => { return data; });
   }
 
   update_Customer(data: any){
-    return this.http.post<any>(this.root.BASE_URL + 'Customer/update_Customer', data)
+    return this.http.post<any>(this.root.BASE_URL + 'customer/update-customer', data)
       .toPromise()
       .then(data => { return data; });
   }

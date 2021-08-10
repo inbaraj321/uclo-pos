@@ -23,7 +23,7 @@ export class CustomerComponent implements OnInit {
   public selected:any;
   public blocked: boolean = false;
   addCustomerHideShow:boolean = false;
-  customerID:any ='';
+  custNo:any ='';
 
   constructor(private customerapi: CustomerApiService, 
     public root: RootService,
@@ -45,10 +45,10 @@ export class CustomerComponent implements OnInit {
 
   createform(){
     this.angForm = this.fb.group({
-      customerID: ['', Validators.required],
-      name: ['', Validators.required],
-      customer_type_id: ['', Validators.required],
-      telno: [''],
+      custNo: ['', Validators.required],
+      custName: ['', Validators.required],
+      customerTypeId: ['', Validators.required],
+      telNo: [''],
       email: [''],
       remarks: [''],
       addoredit: [null],
@@ -67,7 +67,7 @@ export class CustomerComponent implements OnInit {
 
   intTable(){
     this.tableSchema['mainschema'] = [
-      {field: 'cname', header: 'Customer Name', type: 'text', width: 'auto'},
+      {field: 'custName', header: 'Customer Name', type: 'text', width: 'auto'},
       {field: 'customerTypeId', header: 'Customer Type', type: 'text', width: 'auto'},
       {field: 'telNo', header: 'Customer Phone', type: 'text', width: 'auto'},
       {field: 'email', header: 'Customer Email', type: 'text', width: 'auto'},
@@ -81,10 +81,10 @@ export class CustomerComponent implements OnInit {
   }
   runForm(){
     this.formData = [
-      { 'col': 6, 'name': 'customerID', 'type': 'text', 'lable': 'Customer ID *', },
-      { 'col': 6, 'name': 'name', 'type': 'text', 'lable': 'Customer Name *', },
-      { 'col': 6, 'name': 'customer_type_id', 'type': 'dropdown', 'lable': 'Customer Type *', 'options':this.customer_type, 'optionLabel':'customerTypeDesc', 'optionValue':'customerTypeId' },
-      { 'col': 6, 'name': 'telno', 'type': 'mobile', 'pattern': '99 9999 999 999', 'lable': 'Customer Phone', },
+      { 'col': 6, 'name': 'custNo', 'type': 'text', 'lable': 'Customer ID *', },
+      { 'col': 6, 'name': 'custName', 'type': 'text', 'lable': 'Customer Name *', },
+      { 'col': 6, 'name': 'customerTypeId', 'type': 'dropdown', 'lable': 'Customer Type *', 'options':this.customer_type, 'optionLabel':'customerTypeDesc', 'optionValue':'customerTypeId' },
+      { 'col': 6, 'name': 'telNo', 'type': 'text',  'lable': 'Customer Phone', },
       { 'col': 6, 'name': 'email', 'type': 'text', 'lable': 'Customer Email', },
       { 'col': 12, 'name': 'remarks', 'type': 'textarea', 'lable': 'Remarks', }
     ];
@@ -99,12 +99,12 @@ export class CustomerComponent implements OnInit {
 
   openedit(e:any){
     this.angForm.reset();
-    this.angForm.controls['customerID'].setValue(e['USER_ID']);
-    this.angForm.controls['name'].setValue(e['CNAME']);
-    this.angForm.controls['customer_type_id'].setValue(e['CUSTOMER_TYPE_ID']);
-    this.angForm.controls['telno'].setValue(e['TELNO']);
-    this.angForm.controls['email'].setValue(e['EMAIL']);
-    this.angForm.controls['remarks'].setValue(e['REMARKS']);
+    this.angForm.controls['custNo'].setValue(e['custNo']);
+    this.angForm.controls['custName'].setValue(e['custName']);
+    this.angForm.controls['customerTypeId'].setValue(e['customerTypeId']);
+    this.angForm.controls['telNo'].setValue(e['telNo']);
+    this.angForm.controls['email'].setValue(e['email']);
+    this.angForm.controls['remarks'].setValue(e['remarks']);
     this.angForm.controls['addoredit'].setValue(99);
     this.addCustomerHideShow = true;
   }
@@ -113,17 +113,17 @@ export class CustomerComponent implements OnInit {
     if(this.angForm.value['addoredit'] == null){
       this.customerapi.getCustomerInsertID().then(customer => {
         var data = {
-          'customerID': this.angForm.value['customerID'],
-          'name': this.angForm.value['name'],
-          'customer_type_id': this.angForm.value['customer_type_id'],
-          'telno': this.angForm.value['telno'],
+          'custNo': this.angForm.value['custNo'],
+          'custName': this.angForm.value['custName'],
+          'customerTypeId': this.angForm.value['customerTypeId'],
+          'telNo': this.angForm.value['telNo'],
           'email': this.angForm.value['email'],
           'remarks': this.angForm.value['remarks'],
-          'country': this.root.getCompanyData()['COUNTY'],
-          'plant': this.root.getCompanyData()['PLANT'],
-          'companyregnumber': this.root.getCompanyData()['companyregnumber'],
-          'CRAT': this.root.getCompanyData()['CRAT'],
-          'CRBY': this.root.getUserData()['USER_ID'],
+          'country': this.root.getCompanyData()['country'],
+          'plant': this.root.getCompanyData()['plant'],
+          'companyRegNumber': this.root.getCompanyData()['companyRegNumber'],
+          'crAt': this.root.getCompanyData()['crAt'],
+          'crBy': this.root.getUserData()['userId'],
         }
     
         this.customerapi.create_Customer(data).then((data:any)=>{
@@ -141,17 +141,17 @@ export class CustomerComponent implements OnInit {
     }
     else{
         var data = {
-          'customerID': this.angForm.value['customerID'],
-          'name': this.angForm.value['name'],
-          'customer_type_id': this.angForm.value['customer_type_id'],
-          'telno': this.angForm.value['telno'],
+          'custNo': this.angForm.value['custNo'],
+          'custName': this.angForm.value['custName'],
+          'customerTypeId': this.angForm.value['customerTypeId'],
+          'telNo': this.angForm.value['telNo'],
           'email': this.angForm.value['email'],
           'remarks': this.angForm.value['remarks'],
-          'country': this.root.getCompanyData()['COUNTY'],
-          'plant': this.root.getCompanyData()['PLANT'],
-          'companyregnumber': this.root.getCompanyData()['companyregnumber'],
-          'CRAT': this.root.getCompanyData()['CRAT'],
-          'CRBY': this.root.getUserData()['USER_ID'],
+          'country': this.root.getCompanyData()['country'],
+          'plant': this.root.getCompanyData()['plant'],
+          'companyRegNumber': this.root.getCompanyData()['companyRegNumber'],
+          'crAt': this.root.getCompanyData()['crAt'],
+          'crBy': this.root.getUserData()['userId'],
         }
     
         this.customerapi.update_Customer(data).then((data:any)=>{
@@ -171,8 +171,8 @@ export class CustomerComponent implements OnInit {
   openAddCustomer(){
     this.angForm.reset();
     this.customerapi.getCustomerInsertID().then(customer => {
-      this.customerID = customer['result'].custoid
-      this.angForm.controls['customerID'].setValue(this.customerID);
+      this.custNo = customer['result'].custId
+      this.angForm.controls['custNo'].setValue(this.custNo);
       this.angForm.controls['addoredit'].setValue(null);
       this.addCustomerHideShow = true;
     });

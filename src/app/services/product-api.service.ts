@@ -17,13 +17,13 @@ export class ProductApiService {
   }
 
   getProductInsertID(){
-    return this.http.get<any>(this.root.BASE_URL + 'Product/get_ProductInsertID')
+    return this.http.get<any>(this.root.BASE_URL + 'product/get-product-insert-id')
       .toPromise()
       .then(data => { return data; });
   }
   
   create_Product(data: any){
-    return this.http.post<any>(this.root.BASE_URL + 'Product/create_Product', data)
+    return this.http.post<any>(this.root.BASE_URL + 'product/create-product', data)
       .toPromise()
       .then(data => { return data; });
   }
