@@ -10,19 +10,19 @@ export class PosApiService {
   constructor(private root:RootService, private http: HttpClient) { }
 
   get_taxtypes(){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_taxtypes/' + this.root.getCompanyData()['COUNTRY_CODE'])
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-tax-types/' + this.root.getCompanyData()['COUNTRY_CODE'])
       .toPromise()
       .then(data => { return data; });
   }
 
   get_paymentInsertID(){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_paymentInsertID')
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-payment-insert-id')
       .toPromise()
       .then(data => { return data; });
   }
 
   get_allSales(){
-    //debugger;
+    
     return this.http.get<any>(this.root.BASE_URL + 'pos/get-all-sales?uipKey=' + this.root.getUserData()['uiPKey'])
       .toPromise()
       .then(data => { return data; });
@@ -35,7 +35,7 @@ export class PosApiService {
   }
 
   update_Dpayment(data: any){
-    return this.http.post<any>(this.root.BASE_URL + 'Pos/update_payment', data)
+    return this.http.post<any>(this.root.BASE_URL + 'pos/update-payment', data)
       .toPromise()
       .then(data => { return data; });
   }
@@ -65,15 +65,14 @@ export class PosApiService {
   }
 
   get_searchbyInvoiceIdGino(data: any){
-    debugger;
-    return this.http.post<any>(this.root.BASE_URL + 'pos/get-search-by-invoice-id-gino?invoiceNo=', 'IN03210000400')
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-search-by-invoice-id-gino?invoiceNo='+data['inv']+'&giNo='+data['giNo'])
       .toPromise()
       .then(data => { return data; });
   }
 
 
   get_PrintInvoiceData($data = ''){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_PrintInvoiceData/' + $data)
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-print-invoice-data/' + $data)
       .toPromise()
       .then(data => { return data; });
   }
@@ -85,14 +84,13 @@ export class PosApiService {
   }
 
   get_InvoiceIdGino($data = ''){
-    debugger;
     return this.http.get<any>(this.root.BASE_URL + 'pos/get-invoice-id-gino')
       .toPromise()
       .then(data => { return data; });
   }
 
   get_dashboardData($data = ''){
-    return this.http.get<any>(this.root.BASE_URL + 'Pos/get_dashboardData/')
+    return this.http.get<any>(this.root.BASE_URL + 'pos/get-dashboard-data/')
       .toPromise()
       .then(data => { return data; });
   }

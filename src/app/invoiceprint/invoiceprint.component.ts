@@ -39,8 +39,8 @@ export class InvoiceprintComponent implements OnInit {
 
       this.posapi.get_PrintInvoiceData(this.invId).then(data=>{
         this.invHdr = data['invoiceData']
-        this.invoiceDatadtl = data['invoiceDatadtl']
-        this.invoicepaymentDetail = data['invoicepaymentDetail']
+        this.invoiceDatadtl = data['invoiceDataDtl']
+        this.invoicepaymentDetail = data['invoicePaymentDetail']
       });
     });
 

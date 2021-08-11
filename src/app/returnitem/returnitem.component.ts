@@ -49,20 +49,20 @@ export class ReturnitemComponent implements OnInit {
 
   createform(){
     this.angForm = this.fb.group({
-      customerID: [''],
-      name: ['', Validators.required],
-      customer_type_id: ['', Validators.required],
-      telno: [''],
+      custNo: [''],
+      custName: ['', Validators.required],
+      customerTypeId: ['', Validators.required],
+      telNo: [''],
       email: [''],
       remarks: [''],
     });
   }
 
   get_InvoiceIdGino(){
-    debugger;
     this.PosApiService.get_InvoiceIdGino().then(data=>{
+      console.log(data);
       this.Invids = data.invoice;
-      this.Gino = data.gino;
+      this.Gino = data.giNo;
     });
 
     this.PosApiService.get_SalesReturnList().then(data=>{
@@ -71,15 +71,16 @@ export class ReturnitemComponent implements OnInit {
   }
 
   search(){
-    debugger;
+    //debugger;
     if(this.searchInvValue !== '' || this.searchGinoValue !== ''){
 
       var data = {
         inv: this.searchInvValue,
-        gino: this.searchGinoValue
+        giNo: this.searchGinoValue
       }
       this.PosApiService.get_searchbyInvoiceIdGino(data).then(data3=>{
         this.selected = data3['data'];
+        console.log(this.selected);
       })
     }
     else{
@@ -90,7 +91,7 @@ export class ReturnitemComponent implements OnInit {
   intTable(){
     this.tableSchema['mainschema'] = [
       {field: 'soReturn', header: 'SO RETURN NO', type: 'text', width: 'auto'},
-      {field: 'giNO', header: 'GINO', type: 'text', width: 'auto'},
+      {field: 'giNo', header: 'GINO', type: 'text', width: 'auto'},
       {field: 'invoice', header: 'INVOICE', type: 'text', width: 'auto'},
       {field: 'custNo', header: 'CUSTOMER NAME', type: 'text', width: 'auto'},
       {field: 'returnDate', header: 'RETURN DATE', type: 'text', width: 'auto'},
@@ -115,15 +116,14 @@ export class ReturnitemComponent implements OnInit {
   addReturn(){
     if(this.selectedProducts3.length > 0){
       var data = {
-        'Invoice': this.searchInvValue,
+        'inv': this.searchInvValue,
         'gino': this.searchGinoValue,
-        'product': this.selectedProducts3,
+        'item': this.selectedProducts3,
         'note': this.note,
-        'CRBY': this.root.getUserData()['USER_ID'],
+        'crBy': this.root.getUserData()['userId'],
       }
 
       this.PosApiService.addReturn(data).then((data:any)=>{
-        debugger;
         if(data['status']){
           this.addCustomerHideShow = true;
           this.angForm.reset();
@@ -142,7 +142,6 @@ export class ReturnitemComponent implements OnInit {
   }
 
   openNewReturn(){
-    debugger;
     this.addCustomerHideShow = true;
   }
 }

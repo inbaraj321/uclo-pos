@@ -20,12 +20,12 @@ export class PosService {
     var toalQty = 0;
     var toalMQty = 0;
     this.selectedProduct.filter(object => {
-      if(object['ITEM'] == item['ITEM']){
+      if(object['item'] == item['item']){
         if(object['availableQty'] == item['sellingQty'] || parseFloat(object['availableQty']) < parseFloat(item['sellingQty'])){
           toalQty = 1;
         }
-        if(object['MAXSTKQTY'] !== "0"){
-          if( parseFloat(object['MAXSTKQTY']) == parseFloat(item['sellingQty']) || parseFloat(object['MAXSTKQTY']) < parseFloat(item['sellingQty'])){
+        if(object['maximumStackQuantity'] !== "0"){
+          if( parseFloat(object['maximumStackQuantity']) == parseFloat(item['sellingQty']) || parseFloat(object['maximumStackQuantity']) < parseFloat(item['sellingQty'])){
             toalMQty = 1;
           }
         }
@@ -40,9 +40,9 @@ export class PosService {
    }
 
     var totalProduct = this.selectedProduct.filter(object => {
-      if(object['ITEM'] == item['ITEM']){
+      if(object['item'] == item['item']){
         object['sellingQty'] = parseInt(object['sellingQty']) +  1;
-        return object['ITEM'] == item['ITEM'];
+        return object['item'] == item['item'];
       }
       else{
         return false;
@@ -63,7 +63,7 @@ export class PosService {
 
   removeProduct(item:any){
     this.selectedProduct = this.selectedProduct.filter(function(items:any) { 
-      return items.ITEM !== item.ITEM;  
+      return items.item !== item.item;  
     });
     return this.getselectedProducts();
   }

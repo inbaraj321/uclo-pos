@@ -100,12 +100,12 @@ export class SaleslistComponent implements OnInit {
       { 'col': 12, 'name': 'remarks', 'type': 'textarea', 'lable': 'Remarks', }
     ];
   }
-  MakePaymentsubmit(BILL_STATUS = 'Partially Paid'){
+  MakePaymentsubmit(billStatus = 'Partially Paid'){
 
     this.blocked = true;
 
     if((this.selected['TOTAL_AMOUNT'] - (parseFloat(this.angForm.controls['amount'].value) + this.selected['TOTAL_PAID_BY_CUST'])) == 0 ){
-      BILL_STATUS = 'PAID';
+      billStatus = 'PAID';
     }
 
     var data:any = {
@@ -121,7 +121,7 @@ export class SaleslistComponent implements OnInit {
       'SUB_TOTAL': this.selected.SUB_TOTAL,
       'TOTAL_AMOUNT': this.selected.TOTAL_AMOUNT,
       'invID': this.selected.ID,
-      'BILL_STATUS': BILL_STATUS
+      'billStatus': billStatus
     }
 
     this.posapi.update_payment(data).then((data:any)=>{
@@ -153,10 +153,10 @@ export class SaleslistComponent implements OnInit {
   }
 
   viewData(e:any){
-    this.router.navigateByUrl('print-invoice/'+ e?.INVOICE);
+    this.router.navigateByUrl('print-invoice/'+ e?.invoice);
   }
   MakePayment(e:any){
-    if(e?.BILL_STATUS == 'Partially Paid'){      
+    if(e?.billStatus == 'Partially Paid'){      
       this.angForm.reset();
       this.selected = e;
       this.angForm.controls['date'].setValue(new Date());
@@ -170,8 +170,8 @@ export class SaleslistComponent implements OnInit {
     }
   }
   editData(e:any){
-    if((e?.BILL_STATUS).toLowerCase() == 'draft'){
-      this.router.navigateByUrl('home/pos/'+ e?.INVOICE);
+    if((e?.billStatus).toLowerCase() == 'draft'){
+      this.router.navigateByUrl('home/pos/'+ e?.invoice);
     }
     else{
       this.messageService.add({severity:'error', summary:'Only Draft Can Be Edited..!', detail:''});

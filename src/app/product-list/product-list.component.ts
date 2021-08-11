@@ -149,7 +149,7 @@ export class ProductListComponent implements OnInit {
       { 'col': 6, 'name': 'netWeight', 'type': 'number', 'lable': 'Net Weight (KG)' },
       { 'col': 6, 'name': 'grossWeight', 'type': 'number', 'lable': 'Gross Weight (KG)' },
       { 'col': 6, 'name': 'productClassId', 'type': 'dropdown', 'lable': 'Product Class *', 'options':this.prdClass, 'optionLabel':'prdClsDesc', 'optionValue':'prdClsId' },
-      { 'col': 6, 'name': 'itemType', 'type': 'dropdown', 'lable': 'Product Type *', 'options':this.prdType, 'optionLabel':'prdTypeDesc', 'optionValue':'PrdTypeId'  },
+      { 'col': 6, 'name': 'itemType', 'type': 'dropdown', 'lable': 'Product Type *', 'options':this.prdType, 'optionLabel':'prdTypeDesc', 'optionValue':'prdTypeId'  },
       { 'col': 6, 'name': 'productBrandId', 'type': 'dropdown', 'lable': 'Product Brand *', 'options':this.prdBrand, 'optionLabel':'prdBrandDesc', 'optionValue':'prdBrandId'},
       
       { 'col': 12, 'type': 'heading', 'lable': 'Purchase' },

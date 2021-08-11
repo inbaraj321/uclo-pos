@@ -15,7 +15,7 @@ import { MessageService} from 'primeng/api';
 import { Router, ActivatedRoute } from "@angular/router";
 
 export class Customer {
-  constructor(public CNAME: string, public NAME: string, public CUSTOMER_TYPE_DESC: string) { }
+  constructor(public custName: string, public NAME: string, public customerTypeDesc: string) { }
 }
 
 @Component({
@@ -65,9 +65,9 @@ export class PosComponent implements OnInit {
       );
 
       this.angForm = this.fb.group({
-        name: ['', Validators.required],
-        customer_type_id: ['', Validators.required],
-        telno: [''],
+        custName: ['', Validators.required],
+        customerTypeId: ['', Validators.required],
+        telNo: [''],
         email: [''],
         remarks: [''],
       });
@@ -76,7 +76,7 @@ export class PosComponent implements OnInit {
 
   filterStates(name: string) {
     return this.customers.filter(customers =>
-      customers.CNAME.toLowerCase().indexOf(name.toLowerCase()) === 0);
+      customers.custName.toLowerCase().indexOf(name.toLowerCase()) === 0);
   }
 
   ngOnInit(): void {
@@ -94,9 +94,9 @@ export class PosComponent implements OnInit {
 
   runForm(){
     this.formData = [
-      { 'col': 6, 'name': 'name', 'type': 'text', 'lable': 'Customer Name', },
-      { 'col': 6, 'name': 'customer_type_id', 'type': 'dropdown', 'lable': 'Customer Type', 'options':this.customer_Type, 'optionLabel':'CUSTOMER_TYPE_DESC', 'optionValue':'CUSTOMER_TYPE_ID' },
-      { 'col': 6, 'name': 'telno', 'type': 'mobile', 'pattern': '(999) 999-9999', 'lable': 'Customer Phone', },
+      { 'col': 6, 'name': 'custName', 'type': 'text', 'lable': 'Customer Name', },
+      { 'col': 6, 'name': 'customerTypeId', 'type': 'dropdown', 'lable': 'Customer Type', 'options':this.customer_Type, 'optionLabel':'customerTypeDesc', 'optionValue':'customerTypeId' },
+      { 'col': 6, 'name': 'telNo', 'type': 'mobile', 'pattern': '(999) 999-9999', 'lable': 'Customer Phone', },
       { 'col': 6, 'name': 'email', 'type': 'text', 'lable': 'Customer Email', },
       { 'col': 12, 'name': 'remarks', 'type': 'textarea', 'lable': 'Remarks', }
     ];
@@ -116,21 +116,21 @@ export class PosComponent implements OnInit {
   getAllProduct(){
     this.productapi.get_productsAll().then(products => {
 
-      this.PosService.AllProduct = this.virtualProducts = products['result'].product_all;
+      this.PosService.AllProduct = this.virtualProducts = products['result'].itemMst;
 
-      this.UOM = products['result'].UOM_all;
-      this.prdType = products['result'].prdType;
-      this.prdClass = products['result'].prdClass;
-      this.prdBrand = products['result'].prdBrand;
+      this.UOM = products['result'].uomMaster;
+      this.prdType = products['result'].prdTypeMaster;
+      this.prdClass = products['result'].prdClassMaster;
+      this.prdBrand = products['result'].prdBrandMaster;
 
       this.route.params.subscribe(params => {
-        if(params['invoiceid'] !== "0"){
-          this.invId = params['invoiceid']; 
+        if(params['invoiceId'] !== "0"){
+          this.invId = params['invoiceId']; 
   
           this.posapi.get_PrintInvoiceData(this.invId).then(data=>{
             this.inv['hdr'] = data['invoiceData'];
-            this.inv['dtl'] = data['invoiceDatadtl'];
-            this.stateCtrl.setValue(this.inv['hdr']?.CUSTNO);
+            this.inv['dtl'] = data['invoiceDataDtl'];
+            this.stateCtrl.setValue(this.inv['hdr']?.custNo);
             setTimeout(()=>{
               this.child.editAction(this.inv);
             }, 1000)
@@ -144,8 +144,8 @@ export class PosComponent implements OnInit {
 
   getAllCustomer(){
     this.customerapi.get_customerAll().then(customer => {
-      this.customers = customer['result'].customer_all;
-      this.customer_Type = customer['result'].customer_Type;
+      this.customers = customer['customerResult'].customer_all;
+      this.customer_Type = customer['customerResult'].customer_type;
       this.runForm();
     });
   }
@@ -161,17 +161,17 @@ export class PosComponent implements OnInit {
   addCustomer(){
     this.customerapi.getCustomerInsertID().then(customer => {
       var data = {
-        'customerID': customer['result'].custoid,
+        'custNo': customer['result'].custId,
         'name': this.angForm.value['name'],
-        'customer_type_id': this.angForm.value['customer_type_id'],
-        'telno': this.angForm.value['telno'],
+        'customerTypeId': this.angForm.value['customerTypeId'],
+        'telNo': this.angForm.value['telNo'],
         'email': this.angForm.value['email'],
         'remarks': this.angForm.value['remarks'],
-        'country': this.root.getCompanyData()['COUNTY'],
-        'plant': this.root.getCompanyData()['PLANT'],
+        'country': this.root.getCompanyData()['country'],
+        'plant': this.root.getCompanyData()['plant'],
         'companyregnumber': this.root.getCompanyData()['companyregnumber'],
-        'CRAT': this.root.getCompanyData()['CRAT'],
-        'CRBY': this.root.getUserData()['USER_ID'],
+        'crAt': this.root.getCompanyData()['crAt'],
+        'crBy': this.root.getUserData()['userId'],
       }
   
       this.customerapi.create_Customer(data).then((data:any)=>{

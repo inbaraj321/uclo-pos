@@ -22,15 +22,15 @@ export class FormcontrolComponent implements OnInit {
 
   applyuom(e:any){
     if(e.checked == true){
-      this.angForm.controls['PURCHASEUOM'].setValue(this.angForm.controls['STKUOM'].value) 
-      this.angForm.controls['SALESUOM'].setValue(this.angForm.controls['STKUOM'].value) 
-      this.angForm.controls['INVENTORYUOM'].setValue(this.angForm.controls['STKUOM'].value) 
+      this.angForm.controls['purchaseUom'].setValue(this.angForm.controls['stackUom'].value) 
+      this.angForm.controls['salesUom'].setValue(this.angForm.controls['stackUom'].value) 
+      this.angForm.controls['inventoryUom'].setValue(this.angForm.controls['stackUom'].value) 
       this.cd.detectChanges();
     }
     else{
-      this.angForm.controls['PURCHASEUOM'].setValue('') 
-      this.angForm.controls['SALESUOM'].setValue('') 
-      this.angForm.controls['INVENTORYUOM'].setValue('') 
+      this.angForm.controls['purchaseUom'].setValue('') 
+      this.angForm.controls['salesUom'].setValue('') 
+      this.angForm.controls['inventoryUom'].setValue('') 
       this.cd.detectChanges();
     }
   }

@@ -61,8 +61,8 @@ export class DashboardComponent implements OnInit {
     
       for (var i = 0; i < 6; i++) {
           this.sale.push( data['sumSalesAmount'][i].TOTALNAME );
-          this.discound.push( data['get_sumDISCOUNTAmount'][i].TOTALNAME );
-          this.tax.push( data['get_sumTAXAMOUNTAmount'][i].TOTALNAME );   
+          this.discound.push( data['sumDiscountAmount'][i].TOTALNAME );
+          this.tax.push( data['sumTaxAmount'][i].TOTALNAME );   
       }
       this.showchat = true;
       $('body').click();

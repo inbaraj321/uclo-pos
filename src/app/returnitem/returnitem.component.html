@@ -69,11 +69,11 @@
                             <td style="width: 35px; text-align: left;">
                                 <p-tableCheckbox [value]="product"></p-tableCheckbox>
                             </td>
-                            <td style="width: 35px; text-align: left;">{{product.LNNO}}</td>
-                            <td style="width: 40%; text-align: left;">{{product.ITEM}}</td>
-                            <td style="width: 40%; text-align: left;">{{product.ITEMNAME}}</td>
-                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.UNITPRICE)}}</td>
-                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.QTY)}}</td>
+                            <td style="width: 35px; text-align: left;">{{product.lnNo}}</td>
+                            <td style="width: 40%; text-align: left;">{{product.item}}</td>
+                            <td style="width: 40%; text-align: left;">{{product.itemName}}</td>
+                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.unitPrice)}}</td>
+                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.qty)}}</td>
                             <td style="width: 15%; text-align: left;" pEditableColumn>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">

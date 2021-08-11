@@ -97,28 +97,28 @@ export class SalesDraftComponent implements OnInit {
       { 'col': 12, 'name': 'remarks', 'type': 'textarea', 'lable': 'Remarks', }
     ];
   }
-  MakePaymentsubmit(BILL_STATUS = 'Partially Paid'){
+  MakePaymentsubmit(billStatus = 'Partially Paid'){
 
     this.blocked = true;
 
-    if((this.selected['TOTAL_AMOUNT'] - (parseFloat(this.angForm.controls['amount'].value) + this.selected['TOTAL_PAID_BY_CUST'])) == 0 ){
-      BILL_STATUS = 'PAID';
+    if((this.selected['totalAmount'] - (parseFloat(this.angForm.controls['amount'].value) + this.selected['TOTAL_PAID_BY_CUST'])) == 0 ){
+      billStatus = 'PAID';
     }
 
     var data:any = {
-      'plant': this.root.getCompanyData()['PLANT'],
-      'CUSTNO': this.selected.CUSTNO,
+      'plant': this.root.getCompanyData()['plant'],
+      'custNo': this.selected.custNo,
       'givenAmount': this.angForm.controls['amount'].value,
       'cashTypeOption': this.angForm.controls['payby'].value,
       'referenceNo': this.angForm.controls['reference'].value,
       'note': this.angForm.controls['remarks'].value,
-      'CRAT': this.root.getCompanyData()['CRAT'],
-      'CRBY': this.root.getUserData()['USER_ID'],
+      'crAt': this.root.getCompanyData()['crAt'],
+      'crBy': this.root.getUserData()['userId'],
       'BASE_CURRENCY': this.root.getCompanyData()['BASE_CURRENCY'],
       'SUB_TOTAL': this.selected.SUB_TOTAL,
-      'TOTAL_AMOUNT': this.selected.TOTAL_AMOUNT,
+      'totalAmount': this.selected.totalAmount,
       'invID': this.selected.ID,
-      'BILL_STATUS': BILL_STATUS
+      'billStatus': billStatus
     }
 
     this.posapi.update_payment(data).then((data:any)=>{
@@ -174,15 +174,15 @@ export class SalesDraftComponent implements OnInit {
   }
 
   viewData(e:any){
-    this.router.navigateByUrl('print-invoice/'+ e?.INVOICE);
+    this.router.navigateByUrl('print-invoice/'+ e?.invoice);
   }
   MakePayment(e:any){
-    if(e?.BILL_STATUS == 'Partially Paid'){      
+    if(e?.billStatus == 'Partially Paid'){      
       this.angForm.reset();
       this.selected = e;
       this.angForm.controls['date'].setValue(new Date());
       this.angForm.controls['payby'].setValue('payby');
-      this.angForm.controls['amount'].setValue(this.root.returnWithdenomination(e['TOTAL_AMOUNT'] - e['TOTAL_PAID_BY_CUST']));
+      this.angForm.controls['amount'].setValue(this.root.returnWithdenomination(e['totalAmount'] - e['TOTAL_PAID_BY_CUST']));
       this.PaymentPopup = true;
     }
     else{
@@ -191,8 +191,8 @@ export class SalesDraftComponent implements OnInit {
     }
   }
   editData(e:any){
-    if((e?.BILL_STATUS).toLowerCase() == 'draft'){
-      this.router.navigateByUrl('home/pos/'+ e?.INVOICE);
+    if((e?.billStatus).toLowerCase() == 'draft'){
+      this.router.navigateByUrl('home/pos/'+ e?.invoice);
     }
     else{
       this.messageService.add({severity:'error', summary:'Only Draft Can Be Edited..!', detail:''});
