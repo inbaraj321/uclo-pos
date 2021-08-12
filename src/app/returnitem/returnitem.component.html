@@ -71,9 +71,9 @@
                             </td>
                             <td style="width: 35px; text-align: left;">{{product.lnNo}}</td>
                             <td style="width: 40%; text-align: left;">{{product.item}}</td>
-                            <td style="width: 40%; text-align: left;">{{product.itemName}}</td>
+                            <td style="width: 40%; text-align: left;">{{product.itemDescription}}</td>
                             <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.unitPrice)}}</td>
-                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.qty)}}</td>
+                            <td style="width: 15%; text-align: left;">{{root.returnWithdenomination(product.returnQty)}}</td>
                             <td style="width: 15%; text-align: left;" pEditableColumn>
                                 <p-cellEditor>
                                     <ng-template pTemplate="input">

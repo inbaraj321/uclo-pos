@@ -10,7 +10,6 @@ export class ProductApiService {
   constructor(private root:RootService, private http: HttpClient) { }
 
   get_productsAll(){
-    debugger;
     return this.http.get<any>(this.root.BASE_URL + 'product/get-products-all')
       .toPromise()
       .then(data => { return data; });

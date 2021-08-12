@@ -36,7 +36,6 @@ export class SaleslistComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    //debugger;
     this.getAllSales();
     this.primengConfig.ripple = true;
     this.intTable();
@@ -53,7 +52,6 @@ export class SaleslistComponent implements OnInit {
   }
 
   getAllSales(){
-    //debugger;
     this.posapi.get_allSales().then(sales=>{
       this.virtualSales = sales['allSales'];
       console.log(this.virtualSales);

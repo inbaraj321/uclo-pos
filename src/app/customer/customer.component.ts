@@ -56,9 +56,7 @@ export class CustomerComponent implements OnInit {
   }
 
   getAllCustomer(){
-    debugger;
     this.customerapi.get_customerAll().then(customer=>{
-      console.log(customer);
       this.customers = customer['customerResult'].customer_all;
       this.customer_type = customer['customerResult'].customer_type;
       this.runForm();

@@ -11,7 +11,6 @@ export class AuthService {
   constructor(private root:RootService, private router: Router, private http: HttpClient,) { }
 
   public signIn(userData: User){
-    debugger;
     this.login_http(userData).then((data:any)=>{
       if(data['status'] == true){
         localStorage.setItem('ACCESS_TOKEN', data['result'].token);
@@ -25,7 +24,6 @@ export class AuthService {
   }
 
   login_http(data:User){
-    debugger;
     return this.http.post<any>(this.root.BASE_URL + 'auth/login', data)
       .toPromise()
       .then(data => { return data; });

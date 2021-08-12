@@ -60,7 +60,6 @@ export class ReturnitemComponent implements OnInit {
 
   get_InvoiceIdGino(){
     this.PosApiService.get_InvoiceIdGino().then(data=>{
-      console.log(data);
       this.Invids = data.invoice;
       this.Gino = data.giNo;
     });
@@ -71,7 +70,6 @@ export class ReturnitemComponent implements OnInit {
   }
 
   search(){
-    //debugger;
     if(this.searchInvValue !== '' || this.searchGinoValue !== ''){
 
       var data = {
@@ -80,7 +78,6 @@ export class ReturnitemComponent implements OnInit {
       }
       this.PosApiService.get_searchbyInvoiceIdGino(data).then(data3=>{
         this.selected = data3['data'];
-        console.log(this.selected);
       })
     }
     else{
